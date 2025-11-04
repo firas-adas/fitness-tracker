@@ -1,6 +1,18 @@
--- Use or create database
-CREATE DATABASE IF NOT EXISTS FitnessTracker;
+-- Drop and recreate database
+DROP DATABASE IF EXISTS FitnessTracker;
+CREATE DATABASE FitnessTracker;
 USE FitnessTracker;
+
+-- Drop tables
+DROP TABLE IF EXISTS WorkoutSet;
+DROP TABLE IF EXISTS Workout;
+DROP TABLE IF EXISTS Exercise;
+DROP TABLE IF EXISTS Equipment;
+DROP TABLE IF EXISTS MuscleGroup;
+DROP TABLE IF EXISTS Goal;
+DROP TABLE IF EXISTS BodyMetric;
+DROP TABLE IF EXISTS Nutrition;
+DROP TABLE IF EXISTS User;
 
 -- User Table
 CREATE TABLE User (
@@ -9,14 +21,14 @@ CREATE TABLE User (
     last_name VARCHAR(50) NOT NULL,
     date_of_birth DATE,
     gender ENUM('Male', 'Female', 'Other'),
-    email VARCHAR(100) UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
     subscription_status ENUM('Active', 'Inactive') DEFAULT 'Active'
 );
 
 -- Goal Table
 CREATE TABLE Goal (
     goal_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
+    user_id INT NOT NULL,
     goal_type VARCHAR(50),
     target_value DECIMAL(6,2),
     start_date DATE,
@@ -42,8 +54,8 @@ CREATE TABLE Equipment (
 CREATE TABLE Exercise (
     exercise_id INT AUTO_INCREMENT PRIMARY KEY,
     exercise_name VARCHAR(100) NOT NULL,
-    muscle_group_id INT,
-    equipment_id INT,
+    muscle_group_id INT NOT NULL,
+    equipment_id INT NOT NULL,
     description VARCHAR(255),
     FOREIGN KEY (muscle_group_id) REFERENCES MuscleGroup(muscle_group_id),
     FOREIGN KEY (equipment_id) REFERENCES Equipment(equipment_id)
@@ -52,17 +64,19 @@ CREATE TABLE Exercise (
 -- Workout Table
 CREATE TABLE Workout (
     workout_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
+    user_id INT NOT NULL,
     workout_name VARCHAR(100),
     scheduled_datetime DATETIME,
     FOREIGN KEY (user_id) REFERENCES User(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
--- Set Log Table
+-- Workout Set Table
 CREATE TABLE WorkoutSet (
     set_id INT AUTO_INCREMENT PRIMARY KEY,
-    workout_id INT,
-    exercise_id INT,
+    workout_id INT NOT NULL,
+    exercise_id INT NOT NULL,
     set_number INT,
     weight DECIMAL(6,2),
     reps INT,
@@ -79,7 +93,7 @@ CREATE TABLE WorkoutSet (
 -- Body Metric Table
 CREATE TABLE BodyMetric (
     metric_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
+    user_id INT NOT NULL,
     weight DECIMAL(6,2),
     height DECIMAL(5,2),
     measurement_date DATE,
@@ -91,11 +105,11 @@ CREATE TABLE BodyMetric (
 -- Nutrition Log Table
 CREATE TABLE Nutrition (
     nutrition_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    calories INT,
-    protein DECIMAL(6,2),
-    carbs DECIMAL(6,2),
-    fat DECIMAL(6,2),
+    user_id INT NOT NULL,
+    calories INT DEFAULT 0,
+    protein DECIMAL(6,2) DEFAULT 0,
+    carbs DECIMAL(6,2) DEFAULT 0,
+    fat DECIMAL(6,2) DEFAULT 0,
     log_datetime DATETIME,
     FOREIGN KEY (user_id) REFERENCES User(user_id)
         ON DELETE CASCADE
