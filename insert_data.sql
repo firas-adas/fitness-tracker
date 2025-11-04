@@ -1,5 +1,16 @@
 USE FitnessTracker;
 
+-- Clear existing data
+DELETE FROM WorkoutSet WHERE set_id > 0;
+DELETE FROM Workout WHERE workout_id > 0;
+DELETE FROM Exercise WHERE exercise_id > 0;
+DELETE FROM Equipment WHERE equipment_id > 0;
+DELETE FROM MuscleGroup WHERE muscle_group_id > 0;
+DELETE FROM Goal WHERE goal_id > 0;
+DELETE FROM BodyMetric WHERE metric_id > 0;
+DELETE FROM Nutrition WHERE nutrition_id > 0;
+DELETE FROM User WHERE user_id > 0;
+
 -- Users
 INSERT INTO User (first_name, last_name, date_of_birth, gender, email, subscription_status)
 VALUES
@@ -66,6 +77,4 @@ VALUES
 INSERT INTO Nutrition (user_id, calories, protein, carbs, fat, log_datetime)
 VALUES
 (1, 2000, 100, 250, 70, '2025-10-05 12:30:00'),
-(2, 2500, 120, 300, 80, '2025-10-05 08:30:00'),
-(3, 1800, 80, 200, 60, '2025-10-05 18:00:00');
-
+(2, 2500, 120, 300, 80, '2025-10-05 12:15:00');
