@@ -1,7 +1,7 @@
 from core import app
 from flask import redirect, request, url_for 
 from flask.templating import render_template
-from models import Actor, Film, FilmActor, Queries
+from models import Actor, Film, FilmActor, Queries, goal
 
 # A decorator used to tell the application 
 # which URL is associated with which function 
