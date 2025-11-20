@@ -2,7 +2,7 @@ from core import db, ma
 
 # SQLAlchemy Goal model
 class Goal(db.Model):
-    __tablename__ = "Goal"
+    __tablename__ = "goal"
 
     goal_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("User.user_id"), nullable=False)
