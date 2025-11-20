@@ -10,10 +10,8 @@ class User(db.Model):
     activity_level = db.Column(db.String(50), nullable=True)
     experience = db.Column(db.String(50), nullable=True)
     last_update = db.Column(DateTime(timezone=True), onupdate=func.now())
-
-    # ✅ THIS WAS MISSING
     workouts = db.relationship("Workout", back_populates="user", cascade="all, delete-orphan")
-
+    body_metrics = db.relationship('BodyMetric', back_populates='user', cascade='all, delete-orphan')
 
 class Workout(db.Model):
     __tablename__ = 'workout'
@@ -27,3 +25,17 @@ class Workout(db.Model):
     last_update = db.Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
 
     user = db.relationship("User", back_populates="workouts")
+
+class BodyMetric(db.Model):
+
+    body_metric_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+
+    weight = db.Column(db.Float, nullable=True)
+    height = db.Column(db.Float, nullable=True)
+    bmi = db.Column(db.Float, nullable=True)
+    recorded_date = db.Column(db.Date, nullable=True)
+
+    last_update = db.Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+
+    user = db.relationship("User", back_populates="body_metrics")
