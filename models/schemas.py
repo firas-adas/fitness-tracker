@@ -10,8 +10,10 @@ class User(db.Model):
     activity_level = db.Column(db.String(50), nullable=True)
     experience = db.Column(db.String(50), nullable=True)
     last_update = db.Column(DateTime(timezone=True), onupdate=func.now())
+    
     workouts = db.relationship("Workout", back_populates="user", cascade="all, delete-orphan")
     body_metrics = db.relationship('BodyMetric', back_populates='user', cascade='all, delete-orphan')
+    nutrition_entries = db.relationship('Nutrition', back_populates='user', cascade='all, delete-orphan')
 
 class Workout(db.Model):
     __tablename__ = 'workout'
@@ -27,6 +29,7 @@ class Workout(db.Model):
     user = db.relationship("User", back_populates="workouts")
 
 class BodyMetric(db.Model):
+    __tablename__ = "body_metric"
 
     body_metric_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))

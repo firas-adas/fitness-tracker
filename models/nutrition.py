@@ -22,7 +22,7 @@ class Nutrition(db.Model):
 
     last_update = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    user = db.relationship("User", backref="nutrition_logs")
+    user = db.relationship("User", back_populates="nutrition_entries")
 
 
 # ------------------- SCHEMA -------------------
