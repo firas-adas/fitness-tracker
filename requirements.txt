@@ -12,6 +12,7 @@ SQLAlchemy==2.0.13
 tomli==2.0.1
 typing_extensions==4.6.0
 Werkzeug==2.2.2
-flask_marshmallow==1.2.1
-marshmallow-sqlalchemy
+marshmallow==3.19.0
+flask_marshmallow==0.15.0
+marshmallow-sqlalchemy==0.29.0
 cryptography==36.0.1
