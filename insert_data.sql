@@ -29,30 +29,14 @@ CREATE TABLE User (
 CREATE TABLE Goal (
     goal_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-
-    goal_name VARCHAR(100) NOT NULL,
-    goal_type VARCHAR(50) NOT NULL,
-
-    target_value DECIMAL(10,2) NOT NULL,
-    starting_value DECIMAL(10,2),
-    current_value DECIMAL(10,2),
-
-    unit_of_measure VARCHAR(20) NOT NULL,
-
-    start_date DATE NOT NULL,
+    goal_type VARCHAR(50),
+    target_value DECIMAL(6,2),
+    start_date DATE,
     target_date DATE,
-
-    status ENUM('in progress', 'achieved', 'abandoned') DEFAULT 'in progress',
-    frequency ENUM('daily', 'weekly', 'monthly'),
-
-    notes TEXT,
-    priority_level INT,
-
     FOREIGN KEY (user_id) REFERENCES User(user_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
-
 
 -- Muscle Group Lookup Table
 CREATE TABLE MuscleGroup (
