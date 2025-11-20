@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>Users</title>
+</head>
+<body>
+    <h2>All Users</h2>
+
+    <a href="/add_user">Add New User</a>
+    <br><br>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>Activity Level</th>
+            <th>Experience</th>
+            <th>Delete</th>
+        </tr>
+
+        {% for u in users %}
+        <tr>
+            <td>{{ u.user_id }}</td>
+            <td>{{ u.first_name }} {{ u.last_name }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.date_of_birth }}</td>
+            <td>{{ u.gender }}</td>
+            <td>{{ u.activity_level }}</td>
+            <td>{{ u.experience }}</td>
+            <td><a href="/delete_user/{{ u.user_id }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br><br>
+    <a href="/">Back to Home</a>
+
+</body>
+</html>

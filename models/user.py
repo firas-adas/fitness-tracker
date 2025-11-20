@@ -1,28 +1,60 @@
 from sqlalchemy import func
-from models.schemas import Actor
+from datetime import datetime
+from models.schemas import User
 from core import ma, db
 
-from sqlalchemy import DateTime, Enum
-from core import db
-from sqlalchemy.sql import func
+
+# ------------------- GET ALL USERS -------------------
+
+def get_users():
+    all_users = User.query.all()
+    return users_schema.dump(all_users)
 
 
-class User(db.Model):
-    __tablename__ = 'User'
+# ------------------- ADD NEW USER -------------------
 
-    user_id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(50), nullable=False)
-    last_name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(100), nullable=False, unique=True)
-    date_of_birth = db.Column(db.Date, nullable=True)
-    gender = db.Column(Enum('Male', 'Female'))
-    age = db.Column(db.Integer, nullable=True)
-    activity_level = db.Column(db.String(50), nullable=True)
-    experience = db.Column(db.String(50), nullable=True)
-    subscription_status = db.Column(Enum('Active', 'Inactive'), default='Active')
-    last_update = db.Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+def add_user(first_name, last_name, email, date_of_birth, gender,
+             activity_level, experience):
 
-    goals = db.relationship('Goal', back_populates='user', cascade='all, delete-orphan')
-    workouts = db.relationship('Workout', back_populates='user', cascade='all, delete-orphan')
-    body_metrics = db.relationship('BodyMetric', back_populates='user', cascade='all, delete-orphan')
-    nutrition_entries = db.relationship('Nutrition', back_populates='user', cascade='all, delete-orphan')
+    # Convert date string -> date object
+    dob = None
+    if date_of_birth and date_of_birth != "":
+        try:
+            dob = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
+        except ValueError:
+            dob = None
+
+    new_user = User(
+        first_name=first_name,
+        last_name=last_name,
+        email=email,
+        date_of_birth=dob,
+        gender=gender if gender != "" else None,
+        activity_level=activity_level,
+        experience=experience,
+        last_update=func.now()
+    )
+
+    db.session.add(new_user)
+    db.session.commit()
+
+
+# ------------------- DELETE USER -------------------
+
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+
+
+# ------------------- MARSHMALLOW SCHEMA -------------------
+
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        load_instance = True
+
+
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
