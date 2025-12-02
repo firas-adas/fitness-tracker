@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS FitnessTracker;
 CREATE DATABASE FitnessTracker;
 USE FitnessTracker;
 
--- Drop tables
+-- Drop tables in reverse dependency order (safety net)
 DROP TABLE IF EXISTS WorkoutSet;
 DROP TABLE IF EXISTS Workout;
 DROP TABLE IF EXISTS Exercise;
@@ -20,7 +20,7 @@ CREATE TABLE User (
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     date_of_birth DATE,
-    gender ENUM('Male', 'Female', 'Other'),
+    gender ENUM('Male', 'Female'),
     email VARCHAR(100) NOT NULL UNIQUE,
     subscription_status ENUM('Active', 'Inactive') DEFAULT 'Active'
 );
