@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>Add Nutrition Entry</title>
+</head>
+<body>
+
+<h2>Add Nutrition Entry for User {{ user_id }}</h2>
+
+<form action="/add_nutrition/{{ user_id }}" method="POST">
+
+    <label>Calories:</label>
+    <input type="number" name="calories"><br><br>
+
+    <label>Protein:</label>
+    <input type="number" name="protein"><br><br>
+
+    <label>Carbs:</label>
+    <input type="number" name="carbs"><br><br>
+
+    <label>Fat:</label>
+    <input type="number" name="fat"><br><br>
+
+    <label>Water:</label>
+    <input type="number" name="water"><br><br>
+
+    <label>Consistency:</label>
+    <input type="text" name="consistency"><br><br>
+
+    <label>Date:</label>
+    <input type="date" name="log_date"><br><br>
+
+    <button type="submit">Add Entry</button>
+</form>
+
+<br>
+<a href="/nutrition/{{ user_id }}">Back</a>
+
+</body>
+</html>
