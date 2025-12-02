@@ -8,25 +8,19 @@ from models import nutrition as NutritionModel
 from datetime import datetime
 
 
-# ---------------- HOME ----------------
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
-
-# ---------------- USERS ----------------
 
 @app.route('/users')
 def users_list():
     users = UserModel.get_users()
     return render_template('users.html', users=users)
 
-
 @app.route('/add_user', methods=["GET"])
 def add_user_form():
     return render_template('add_user.html')
-
 
 @app.route('/add_user', methods=["POST"])
 def add_user():
@@ -50,25 +44,19 @@ def add_user():
 
     return redirect('/users')
 
-
 @app.route('/delete_user/<int:id>')
 def delete_user(id):
     UserModel.delete_user(id)
     return redirect('/users')
-
-
-# ---------------- GOALS ----------------
 
 @app.route('/goals/<int:user_id>')
 def goals_list(user_id):
     goals = GoalModel.get_goals()
     return render_template('goals.html', goals=goals, user_id=user_id)
 
-
 @app.route('/add_goal/<int:user_id>', methods=["GET"])
 def add_goal_form(user_id):
     return render_template('add_goal.html', user_id=user_id)
-
 
 @app.route('/add_goal/<int:user_id>', methods=["POST"])
 def add_goal(user_id):
@@ -80,25 +68,19 @@ def add_goal(user_id):
     GoalModel.add_goal(user_id, goal_type, target_value, start_date, target_date)
     return redirect(f'/goals/{user_id}')
 
-
 @app.route('/delete_goal/<int:id>')
 def delete_goal(id):
     GoalModel.delete_goal(id)
     return redirect('/users')
-
-
-# ---------------- WORKOUTS ----------------
 
 @app.route('/workouts/<int:user_id>')
 def workouts_list(user_id):
     workouts = WorkoutModel.get_workouts_by_user(user_id)
     return render_template('workouts.html', workouts=workouts, user_id=user_id)
 
-
 @app.route('/add_workout/<int:user_id>', methods=["GET"])
 def add_workout_form(user_id):
     return render_template('add_workout.html', user_id=user_id)
-
 
 @app.route('/add_workout/<int:user_id>', methods=["POST"])
 def add_workout(user_id):
@@ -110,25 +92,19 @@ def add_workout(user_id):
     WorkoutModel.add_workout(user_id, workout_type, duration, calories, workout_date)
     return redirect(f'/workouts/{user_id}')
 
-
 @app.route('/delete_workout/<int:id>')
 def delete_workout(id):
     WorkoutModel.delete_workout(id)
     return redirect('/users')
-
-
-# ---------------- BODY METRICS ----------------
 
 @app.route('/metrics/<int:user_id>')
 def metrics_list(user_id):
     metrics = BodyModel.get_body_metrics()
     return render_template('body_metrics.html', metrics=metrics, user_id=user_id)
 
-
 @app.route('/add_metric/<int:user_id>', methods=["GET"])
 def add_metric_form(user_id):
     return render_template('add_body_metric.html', user_id=user_id)
-
 
 @app.route('/add_metric/<int:user_id>', methods=["POST"])
 def add_metric(user_id):
@@ -140,14 +116,10 @@ def add_metric(user_id):
     BodyModel.add_body_metric(user_id, weight, height, bmi, recorded_date)
     return redirect(f'/metrics/{user_id}')
 
-
 @app.route('/delete_metric/<int:id>')
 def delete_metric(id):
     BodyModel.delete_body_metric(id)
     return redirect('/users')
-
-
-# ---------------- NUTRITION ----------------
 
 @app.route('/nutrition/<int:user_id>')
 def nutrition_list(user_id):
@@ -156,11 +128,9 @@ def nutrition_list(user_id):
     )
     return render_template('nutrition.html', nutrition=nutrition, user_id=user_id)
 
-
 @app.route('/add_nutrition/<int:user_id>', methods=["GET"])
 def add_nutrition_form(user_id):
     return render_template('add_nutrition.html', user_id=user_id)
-
 
 @app.route('/add_nutrition/<int:user_id>', methods=["POST"])
 def add_nutrition(user_id):
@@ -189,7 +159,6 @@ def add_nutrition(user_id):
 
     return redirect(f'/nutrition/{user_id}')
 
-
 @app.route('/delete_nutrition/<int:id>')
 def delete_nutrition(id):
     entry = NutritionModel.Nutrition.query.get(id)
@@ -198,9 +167,6 @@ def delete_nutrition(id):
         db.session.delete(entry)
         db.session.commit()
     return redirect('/users')
-
-
-# ---------------- MAIN ----------------
 
 if __name__ == '__main__':
     app.run(port=8001, debug=True)
