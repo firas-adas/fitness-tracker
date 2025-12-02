@@ -1,3 +1,7 @@
+from core.__init__ import db  # your SQLAlchemy instance
+from sqlalchemy import func    # for func.now() in last_update
+from sqlalchemy.types import DateTime  # for DateTime columns
+
 class User(db.Model):
     __tablename__ = 'user'
 

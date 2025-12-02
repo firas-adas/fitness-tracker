@@ -1,56 +1,27 @@
-from sqlalchemy import func
+from core import db, ma
 from datetime import datetime
-from models.schemas import BodyMetric
-from core import ma, db
 
+class BodyMetric(db.Model):
+    __tablename__ = 'body_metric'
 
-# ------------------- GET ALL BODY METRICS -------------------
+    body_metric_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    weight = db.Column(db.Float)
+    height = db.Column(db.Float)
+    bmi = db.Column(db.Float)
+    recorded_date = db.Column(db.Date)
 
 def get_body_metrics():
-    metrics = BodyMetric.query.all()
-    return body_metrics_schema.dump(metrics)
-
-
-# ------------------- ADD BODY METRIC -------------------
+    return BodyMetric.query.all()
 
 def add_body_metric(user_id, weight, height, bmi, recorded_date):
-
-    record_date = None
-    if recorded_date and recorded_date != "":
-        try:
-            record_date = datetime.strptime(recorded_date, "%Y-%m-%d").date()
-        except ValueError:
-            record_date = None
-
-    metric = BodyMetric(
-        user_id=user_id,
-        weight=weight,
-        height=height,
-        bmi=bmi,
-        recorded_date=record_date,
-        last_update=func.now()
-    )
-
-    db.session.add(metric)
+    rd = datetime.strptime(recorded_date, "%Y-%m-%d").date() if recorded_date else None
+    bm = BodyMetric(user_id=user_id, weight=weight, height=height, bmi=bmi, recorded_date=rd)
+    db.session.add(bm)
     db.session.commit()
 
-
-# ------------------- DELETE BODY METRIC -------------------
-
-def delete_body_metric(metric_id):
-    metric = BodyMetric.query.get(metric_id)
-    if metric:
-        db.session.delete(metric)
+def delete_body_metric(body_metric_id):
+    bm = BodyMetric.query.get(body_metric_id)
+    if bm:
+        db.session.delete(bm)
         db.session.commit()
-
-
-# ------------------- MARSHMALLOW SCHEMA -------------------
-
-class BodyMetricSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = BodyMetric
-        load_instance = True
-
-
-body_metric_schema = BodyMetricSchema()
-body_metrics_schema = BodyMetricSchema(many=True)
