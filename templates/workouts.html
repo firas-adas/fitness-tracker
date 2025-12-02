@@ -1,0 +1,38 @@
+<html>
+<head>
+    <title>Workouts</title>
+</head>
+<body>
+
+<h2>Workouts for User {{ user_id }}</h2>
+
+<a href="/add_workout/{{ user_id }}">Add Workout</a>
+<br><br>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Workout ID</th>
+        <th>Type</th>
+        <th>Duration</th>
+        <th>Calories</th>
+        <th>Date</th>
+        <th>Delete</th>
+    </tr>
+
+    {% for w in workouts %}
+    <tr>
+        <td>{{ w.workout_id }}</td>
+        <td>{{ w.workout_type }}</td>
+        <td>{{ w.duration }}</td>
+        <td>{{ w.calories_burned }}</td>
+        <td>{{ w.workout_date }}</td>
+        <td><a href="/delete_workout/{{ w.workout_id }}">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<a href="/users">Back to Users</a>
+
+</body>
+</html>

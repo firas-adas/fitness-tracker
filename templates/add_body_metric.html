@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>Add Body Metric</title>
+</head>
+<body>
+
+<h2>Add Body Metric for User {{ user_id }}</h2>
+
+<form action="/add_metric/{{ user_id }}" method="POST">
+
+    <label>Weight:</label>
+    <input type="number" name="weight" step="0.1"><br><br>
+
+    <label>Height:</label>
+    <input type="number" name="height" step="0.1"><br><br>
+
+    <label>BMI:</label>
+    <input type="number" name="bmi" step="0.1"><br><br>
+
+    <label>Date Recorded:</label>
+    <input type="date" name="recorded_date"><br><br>
+
+    <button type="submit">Add Metric</button>
+</form>
+
+<br>
+<a href="/metrics/{{ user_id }}">Back</a>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>Add Goal</title>
+</head>
+<body>
+
+<h2>Add a Goal for User {{ user_id }}</h2>
+
+<form action="/add_goal/{{ user_id }}" method="POST">
+
+    <label>Goal Type:</label>
+    <input type="text" name="goal_type"><br><br>
+
+    <label>Target Value:</label>
+    <input type="number" name="target_value" step="0.1"><br><br>
+
+    <label>Start Date:</label>
+    <input type="date" name="start_date"><br><br>
+
+    <label>Target Date:</label>
+    <input type="date" name="target_date"><br><br>
+
+    <button type="submit">Add Goal</button>
+</form>
+
+<br>
+<a href="/goals/{{ user_id }}">Back</a>
+
+</body>
+</html>

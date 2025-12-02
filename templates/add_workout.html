@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>Add Workout</title>
+</head>
+<body>
+
+<h2>Add Workout for User {{ user_id }}</h2>
+
+<form action="/add_workout/{{ user_id }}" method="POST">
+
+    <label>Workout Type:</label>
+    <input type="text" name="workout_type"><br><br>
+
+    <label>Duration (minutes):</label>
+    <input type="number" name="duration"><br><br>
+
+    <label>Calories Burned:</label>
+    <input type="number" name="calories_burned"><br><br>
+
+    <label>Date:</label>
+    <input type="date" name="workout_date"><br><br>
+
+    <button type="submit">Add Workout</button>
+</form>
+
+<br>
+<a href="/workouts/{{ user_id }}">Back</a>
+
+</body>
+</html>
