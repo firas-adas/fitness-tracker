@@ -1,4 +1,4 @@
-from core import db, ma
+from core import db
 from datetime import datetime
 
 class BodyMetric(db.Model):
@@ -11,17 +11,19 @@ class BodyMetric(db.Model):
     measurement_date = db.Column(db.Date)
 
 
-def get_body_metrics():
-    return BodyMetric.query.all()
+def get_metrics_by_user(user_id):
+    return BodyMetric.query.filter_by(user_id=user_id).all()
 
-def add_body_metric(user_id, weight, height, bmi, recorded_date):
-    rd = datetime.strptime(recorded_date, "%Y-%m-%d").date() if recorded_date else None
-    bm = BodyMetric(user_id=user_id, weight=weight, height=height, bmi=bmi, recorded_date=rd)
-    db.session.add(bm)
+
+def add_metric(user_id, weight, height, measurement_date):
+    md = datetime.strptime(measurement_date, "%Y-%m-%d").date() if measurement_date else None
+    new_metric = BodyMetric(user_id=user_id, weight=weight, height=height, measurement_date=md)
+    db.session.add(new_metric)
     db.session.commit()
 
-def delete_body_metric(body_metric_id):
-    bm = BodyMetric.query.get(body_metric_id)
-    if bm:
-        db.session.delete(bm)
+
+def delete_metric(metric_id):
+    m = BodyMetric.query.get(metric_id)
+    if m:
+        db.session.delete(m)
         db.session.commit()
