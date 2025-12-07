@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% block content %}
+
 
 <h2>Nutrition Logs</h2>
 
@@ -16,7 +15,6 @@
     <th>Delete</th>
 </tr>
 
-{% for n in logs %}
 <tr>
     <td>{{ n.nutrition_id }}</td>
     <td>{{ n.calories }}</td>
@@ -28,7 +26,5 @@
         <a style="color:red;" href="{{ url_for('delete_nutrition_route', id=n.nutrition_id) }}">❌ Delete</a>
     </td>
 </tr>
-{% endfor %}
 </table>
 
-{% endblock %}
