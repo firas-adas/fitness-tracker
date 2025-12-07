@@ -1,30 +1,22 @@
-<html>
-<head>
-    <title>Add Workout</title>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block content %}
+<h2>Add Workout</h2>
 
-<h2>Add Workout for User {{ user_id }}</h2>
-
-<form action="/add_workout/{{ user_id }}" method="POST">
-
+<form action="{{ url_for('add_workout', user_id=user_id) }}" method="POST">
     <label>Workout Type:</label>
-    <input type="text" name="workout_type"><br><br>
+    <input type="text" name="workout_type" required><br><br>
 
     <label>Duration (minutes):</label>
-    <input type="number" name="duration"><br><br>
+    <input type="number" name="duration" required><br><br>
 
     <label>Calories Burned:</label>
-    <input type="number" name="calories_burned"><br><br>
+    <input type="number" name="calories" required><br><br>
 
     <label>Date:</label>
-    <input type="date" name="workout_date"><br><br>
+    <input type="date" name="workout_date" required><br><br>
 
-    <button type="submit">Add Workout</button>
+    <button type="submit">💾 Save</button>
 </form>
 
-<br>
-<a href="/workouts/{{ user_id }}">Back</a>
-
-</body>
-</html>
+<a href="{{ url_for('workouts_list', user_id=user_id) }}">⬅ Back</a>
+{% endblock %}

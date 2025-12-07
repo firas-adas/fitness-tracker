@@ -1,172 +1,131 @@
-from core import app
-from flask import redirect, request, url_for, render_template
-from models import user as UserModel
-from models import goal as GoalModel
-from models import workouts as WorkoutModel
-from models import body_metrics as BodyModel
-from models import nutrition as NutritionModel
-from datetime import datetime
+from flask import Flask, render_template, request, redirect, url_for
+from core import db
+from users import User, add_user, delete_user
+from workouts import Workout, get_workouts_by_user, add_workout, delete_workout
+from metrics import BodyMetric, get_metrics_by_user, add_metric, delete_metric
+from nutrition import Nutrition, get_nutrition_by_user, add_nutrition, delete_nutrition
 
+app = Flask(__name__, template_folder="templates")
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:YourPasswordHere@127.0.0.1:3306/sakila"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+db.init_app(app)
 
+# ---------- HOME ----------
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
 
+
+# ---------- USERS ----------
 @app.route('/users')
 def users_list():
-    users = UserModel.get_users()
+    users = User.query.all()
     return render_template('users.html', users=users)
 
-@app.route('/add_user', methods=["GET"])
-def add_user_form():
+@app.route('/add_user', methods=['GET', 'POST'])
+def add_user_route():
+    if request.method == 'POST':
+        add_user(
+            request.form['first_name'],
+            request.form['last_name'],
+            request.form['email'],
+            request.form.get('gender'),
+            request.form.get('birthdate'),
+        )
+        return redirect(url_for('users_list'))
     return render_template('add_user.html')
 
-@app.route('/add_user', methods=["POST"])
-def add_user():
-    first_name = request.form.get("first_name")
-    last_name = request.form.get("last_name")
-    email = request.form.get("email")
-    date_of_birth = request.form.get("date_of_birth")
-    gender = request.form.get("gender")
-    activity_level = request.form.get("activity_level")
-    experience = request.form.get("experience")
-
-    UserModel.add_user(
-        first_name,
-        last_name,
-        email,
-        date_of_birth,
-        gender,
-        activity_level,
-        experience
-    )
-
-    return redirect('/users')
-
 @app.route('/delete_user/<int:id>')
-def delete_user(id):
-    UserModel.delete_user(id)
-    return redirect('/users')
+def delete_user_route(id):
+    delete_user(id)
+    return redirect(url_for('users_list'))
 
-@app.route('/goals/<int:user_id>')
-def goals_list(user_id):
-    goals = GoalModel.get_goals()
-    return render_template('goals.html', goals=goals, user_id=user_id)
 
-@app.route('/add_goal/<int:user_id>', methods=["GET"])
-def add_goal_form(user_id):
-    return render_template('add_goal.html', user_id=user_id)
-
-@app.route('/add_goal/<int:user_id>', methods=["POST"])
-def add_goal(user_id):
-    goal_type = request.form.get("goal_type")
-    target_value = request.form.get("target_value")
-    start_date = request.form.get("start_date")
-    target_date = request.form.get("target_date")
-
-    GoalModel.add_goal(user_id, goal_type, target_value, start_date, target_date)
-    return redirect(f'/goals/{user_id}')
-
-@app.route('/delete_goal/<int:id>')
-def delete_goal(id):
-    GoalModel.delete_goal(id)
-    return redirect('/users')
-
+# ---------- WORKOUTS ----------
 @app.route('/workouts/<int:user_id>')
 def workouts_list(user_id):
-    workouts = WorkoutModel.get_workouts_by_user(user_id)
+    workouts = get_workouts_by_user(user_id)
     return render_template('workouts.html', workouts=workouts, user_id=user_id)
 
-@app.route('/add_workout/<int:user_id>', methods=["GET"])
+
+@app.route('/workouts/add/<int:user_id>', methods=['GET', 'POST'])
 def add_workout_form(user_id):
+    if request.method == 'POST':
+        add_workout(
+            user_id,
+            request.form['workout_type'],
+            request.form['duration'],
+            request.form['calories_burned'],
+            request.form['workout_date']
+        )
+        return redirect(url_for('workouts_list', user_id=user_id))
     return render_template('add_workout.html', user_id=user_id)
 
-@app.route('/add_workout/<int:user_id>', methods=["POST"])
-def add_workout(user_id):
-    workout_type = request.form.get("workout_type")
-    duration = request.form.get("duration")
-    calories = request.form.get("calories_burned")
-    workout_date = request.form.get("workout_date")
 
-    WorkoutModel.add_workout(user_id, workout_type, duration, calories, workout_date)
-    return redirect(f'/workouts/{user_id}')
+@app.route('/workouts/delete/<int:id>')
+def delete_workout_route(id):
+    workout = Workout.query.get(id)
+    user_id = workout.user_id
+    delete_workout(id)
+    return redirect(url_for('workouts_list', user_id=user_id))
 
-@app.route('/delete_workout/<int:id>')
-def delete_workout(id):
-    WorkoutModel.delete_workout(id)
-    return redirect('/users')
 
+# ---------- METRICS ----------
 @app.route('/metrics/<int:user_id>')
 def metrics_list(user_id):
-    metrics = BodyModel.get_body_metrics()
-    return render_template('body_metrics.html', metrics=metrics, user_id=user_id)
+    metrics = get_metrics_by_user(user_id)
+    return render_template('metrics.html', metrics=metrics, user_id=user_id)
 
-@app.route('/add_metric/<int:user_id>', methods=["GET"])
+@app.route('/metrics/add/<int:user_id>', methods=['GET', 'POST'])
 def add_metric_form(user_id):
-    return render_template('add_body_metric.html', user_id=user_id)
+    if request.method == 'POST':
+        add_metric(
+            user_id,
+            request.form['weight'],
+            request.form['height'],
+            request.form['measurement_date']
+        )
+        return redirect(url_for('metrics_list', user_id=user_id))
+    return render_template('add_metric.html', user_id=user_id)
 
-@app.route('/add_metric/<int:user_id>', methods=["POST"])
-def add_metric(user_id):
-    weight = request.form.get("weight")
-    height = request.form.get("height")
-    bmi = request.form.get("bmi")
-    recorded_date = request.form.get("recorded_date")
+@app.route('/metrics/delete/<int:id>')
+def delete_metric_route(id):
+    metric = BodyMetric.query.get(id)
+    user_id = metric.user_id
+    delete_metric(id)
+    return redirect(url_for('metrics_list', user_id=user_id))
 
-    BodyModel.add_body_metric(user_id, weight, height, bmi, recorded_date)
-    return redirect(f'/metrics/{user_id}')
 
-@app.route('/delete_metric/<int:id>')
-def delete_metric(id):
-    BodyModel.delete_body_metric(id)
-    return redirect('/users')
-
+# ---------- NUTRITION ----------
 @app.route('/nutrition/<int:user_id>')
 def nutrition_list(user_id):
-    nutrition = NutritionModel.nutritions_schema.dump(
-        NutritionModel.Nutrition.query.filter_by(user_id=user_id).all()
-    )
-    return render_template('nutrition.html', nutrition=nutrition, user_id=user_id)
+    logs = get_nutrition_by_user(user_id)
+    return render_template('nutrition.html', logs=logs, user_id=user_id)
 
-@app.route('/add_nutrition/<int:user_id>', methods=["GET"])
+@app.route('/nutrition/add/<int:user_id>', methods=['GET', 'POST'])
 def add_nutrition_form(user_id):
+    if request.method == 'POST':
+        add_nutrition(
+            user_id,
+            request.form['calories'],
+            request.form['protein'],
+            request.form['carbs'],
+            request.form['fat'],
+            request.form['log_date']
+        )
+        return redirect(url_for('nutrition_list', user_id=user_id))
     return render_template('add_nutrition.html', user_id=user_id)
 
-@app.route('/add_nutrition/<int:user_id>', methods=["POST"])
-def add_nutrition(user_id):
-    calories = request.form.get("calories")
-    protein = request.form.get("protein")
-    carbs = request.form.get("carbs")
-    fat = request.form.get("fat")
-    water = request.form.get("water")
-    consistency = request.form.get("consistency")
-    log_date = request.form.get("log_date")
+@app.route('/nutrition/delete/<int:id>')
+def delete_nutrition_route(id):
+    entry = Nutrition.query.get(id)
+    user_id = entry.user_id
+    delete_nutrition(id)
+    return redirect(url_for('nutrition_list', user_id=user_id))
 
-    entry = NutritionModel.Nutrition(
-        user_id=user_id,
-        calories=calories,
-        protein=protein,
-        carbs=carbs,
-        fat=fat,
-        water=water,
-        consistency=consistency,
-        log_date=log_date
-    )
 
-    from core import db
-    db.session.add(entry)
-    db.session.commit()
-
-    return redirect(f'/nutrition/{user_id}')
-
-@app.route('/delete_nutrition/<int:id>')
-def delete_nutrition(id):
-    entry = NutritionModel.Nutrition.query.get(id)
-    if entry:
-        from core import db
-        db.session.delete(entry)
-        db.session.commit()
-    return redirect('/users')
-
-if __name__ == '__main__':
-    app.run(port=8001, debug=True)
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)

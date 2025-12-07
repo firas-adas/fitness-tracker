@@ -1,28 +1,25 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
 {% block content %}
 <h2>Workouts for User #{{ user_id }}</h2>
 
-<a class="btn" href="/add_workout/{{ user_id }}">Add Workout</a>
+<a class="btn" href="{{ url_for('add_workout_form', user_id=user_id) }}">➕ Add Workout</a>
 
 <table>
 <tr>
     <th>ID</th>
-    <th>Type</th>
-    <th>Duration</th>
-    <th>Calories</th>
-    <th>Date</th>
-    <th></th>
+    <th>Name</th>
+    <th>Scheduled</th>
+    <th>Delete</th>
 </tr>
 
 {% for w in workouts %}
 <tr>
     <td>{{ w.workout_id }}</td>
-    <td>{{ w.workout_type }}</td>
-    <td>{{ w.duration }}</td>
-    <td>{{ w.calories_burned }}</td>
-    <td>{{ w.workout_date }}</td>
-    <td><a href="/delete_workout/{{ w.workout_id }}">Delete</a></td>
+    <td>{{ w.workout_name }}</td>
+    <td>{{ w.scheduled_datetime }}</td>
+    <td><a style="color:red;" href="{{ url_for('delete_workout', id=w.workout_id) }}">❌ Delete</a></td>
 </tr>
 {% endfor %}
 </table>
+
 {% endblock %}

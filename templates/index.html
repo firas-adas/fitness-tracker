@@ -1,7 +1,12 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
 {% block content %}
-<h2>Welcome</h2>
-<p>Track workouts, goals, nutrition, and progress.</p>
-<br>
-<a class="btn" href="/users">View Users</a>
+<div style="text-align:center; margin-top:40px;">
+    <h2>Welcome</h2>
+    <p>Track workouts, goals, nutrition, and progress.</p>
+
+    <a href="{{ url_for('users_list') }}" 
+       style="padding: 12px 20px; background:#5D2CB4; color:white; border-radius:6px; text-decoration:none;">
+       View Users
+    </a>
+</div>
 {% endblock %}

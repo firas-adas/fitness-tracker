@@ -2,14 +2,14 @@ from core import db, ma
 from datetime import datetime
 
 class BodyMetric(db.Model):
-    __tablename__ = 'body_metric'
+    __tablename__ = "BodyMetric"
 
-    body_metric_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
+    metric_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.user_id'))
     weight = db.Column(db.Float)
     height = db.Column(db.Float)
-    bmi = db.Column(db.Float)
-    recorded_date = db.Column(db.Date)
+    measurement_date = db.Column(db.Date)
+
 
 def get_body_metrics():
     return BodyMetric.query.all()
