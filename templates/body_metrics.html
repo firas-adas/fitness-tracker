@@ -1,22 +1,12 @@
-<html>
-<head><title>Body Metrics</title></head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+<h2>Body Metrics</h2>
+<a class="btn" href="/add_metric/{{ user_id }}">Add Entry</a>
 
-<h2>📏 Body Metrics for User {{ user_id }}</h2>
-
-<a href="/add_metric/{{ user_id }}">➕ Add Metric</a>
-<br><br>
-
-<table border="1" cellpadding="10">
+<table>
 <tr>
-    <th>ID</th>
-    <th>Weight</th>
-    <th>Height</th>
-    <th>BMI</th>
-    <th>Date</th>
-    <th>Delete</th>
+    <th>ID</th><th>Weight</th><th>Height</th><th>BMI</th><th>Date</th><th></th>
 </tr>
-
 {% for m in metrics %}
 <tr>
     <td>{{ m.body_metric_id }}</td>
@@ -24,13 +14,8 @@
     <td>{{ m.height }}</td>
     <td>{{ m.bmi }}</td>
     <td>{{ m.recorded_date }}</td>
-    <td><a href="/delete_metric/{{ m.body_metric_id }}">❌</a></td>
+    <td><a href="/delete_metric/{{ m.body_metric_id }}">Delete</a></td>
 </tr>
 {% endfor %}
 </table>
-
-<br><hr>
-<a href="/users">⬅ Back</a>
-
-</body>
-</html>
+{% endblock %}

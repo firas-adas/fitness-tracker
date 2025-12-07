@@ -1,13 +1,9 @@
-<html>
-<head><title>Users</title></head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+<h2>Users</h2>
+<a class="btn" href="/add_user">Add User</a>
 
-<h2>👤 Users</h2>
-
-<a href="/add_user">➕ Add User</a>
-<br><br>
-
-<table border="1" cellpadding="10">
+<table>
 <thead>
 <tr>
     <th>ID</th>
@@ -16,7 +12,6 @@
     <th>Actions</th>
 </tr>
 </thead>
-
 <tbody>
 {% for user in users %}
 <tr>
@@ -24,19 +19,14 @@
     <td>{{ user.first_name }} {{ user.last_name }}</td>
     <td>{{ user.email }}</td>
     <td>
-        <a href="/goals/{{ user.id }}">🎯 Goals</a> |
-        <a href="/workouts/{{ user.id }}">🏋️ Workouts</a> |
-        <a href="/metrics/{{ user.id }}">📏 Body Metrics</a> |
-        <a href="/nutrition/{{ user.id }}">🥗 Nutrition</a> |
-        <a href="/delete_user/{{ user.id }}">❌ Delete</a>
+        <a href="/goals/{{ user.id }}">Goals</a> |
+        <a href="/workouts/{{ user.id }}">Workouts</a> |
+        <a href="/metrics/{{ user.id }}">Metrics</a> |
+        <a href="/nutrition/{{ user.id }}">Nutrition</a> |
+        <a href="/delete_user/{{ user.id }}">Delete</a>
     </td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
-
-<br><hr>
-<a href="/">🏠 Home</a>
-
-</body>
-</html>
+{% endblock %}

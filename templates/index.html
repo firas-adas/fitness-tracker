@@ -1,19 +1,7 @@
-<html>
-<head>
-    <title>Fitness Tracker</title>
-</head>
-<body>
-
-<h1>🏋️ Fitness Tracker</h1>
-
-<p>Track goals, workouts, nutrition, and progress.</p>
-
-<a href="/users">👤 View Users</a>
-
-<hr>
-<p style="font-size: 12px; color: gray;">
-    Fitness Tracker Project · Lipscomb University
-</p>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<h2>Welcome</h2>
+<p>Track workouts, goals, nutrition, and progress.</p>
+<br>
+<a class="btn" href="/users">View Users</a>
+{% endblock %}

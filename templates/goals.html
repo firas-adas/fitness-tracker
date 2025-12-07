@@ -1,20 +1,16 @@
-<html>
-<head><title>User Goals</title></head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+<h2>Goals for User #{{ user_id }}</h2>
+<a class="btn" href="/add_goal/{{ user_id }}">Add Goal</a>
 
-<h2>🎯 Goals for User {{ user_id }}</h2>
-
-<a href="/add_goal/{{ user_id }}">➕ Add Goal</a>
-<br><br>
-
-<table border="1" cellpadding="10">
+<table>
 <tr>
     <th>ID</th>
     <th>Type</th>
     <th>Target</th>
     <th>Start</th>
-    <th>Target Date</th>
-    <th>Delete</th>
+    <th>Deadline</th>
+    <th></th>
 </tr>
 
 {% for g in goals %}
@@ -24,13 +20,8 @@
     <td>{{ g.target_value }}</td>
     <td>{{ g.start_date }}</td>
     <td>{{ g.target_date }}</td>
-    <td><a href="/delete_goal/{{ g.goal_id }}">❌</a></td>
+    <td><a href="/delete_goal/{{ g.goal_id }}">Delete</a></td>
 </tr>
 {% endfor %}
 </table>
-
-<br><hr>
-<a href="/users">⬅ Back to Users</a>
-
-</body>
-</html>
+{% endblock %}

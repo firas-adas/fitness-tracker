@@ -1,23 +1,13 @@
-<html>
-<head><title>Nutrition Logs</title></head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+<h2>Nutrition Logs</h2>
 
-<h2>🥗 Nutrition Log for User {{ user_id }}</h2>
+<a class="btn" href="/add_nutrition/{{ user_id }}">Add Entry</a>
 
-<a href="/add_nutrition/{{ user_id }}">➕ Add Entry</a>
-<br><br>
-
-<table border="1" cellpadding="10">
+<table>
 <tr>
-    <th>ID</th>
-    <th>Calories</th>
-    <th>Protein</th>
-    <th>Carbs</th>
-    <th>Fat</th>
-    <th>Water</th>
-    <th>Notes</th>
-    <th>Date</th>
-    <th>Delete</th>
+    <th>ID</th><th>Calories</th><th>Protein</th><th>Carbs</th>
+    <th>Fat</th><th>Water</th><th>Consistency</th><th>Date</th><th></th>
 </tr>
 
 {% for n in nutrition %}
@@ -30,13 +20,8 @@
     <td>{{ n.water }}</td>
     <td>{{ n.consistency }}</td>
     <td>{{ n.log_date }}</td>
-    <td><a href="/delete_nutrition/{{ n.nutrition_id }}">❌</a></td>
+    <td><a href="/delete_nutrition/{{ n.nutrition_id }}">Delete</a></td>
 </tr>
 {% endfor %}
 </table>
-
-<br><hr>
-<a href="/users">⬅ Back</a>
-
-</body>
-</html>
+{% endblock %}
