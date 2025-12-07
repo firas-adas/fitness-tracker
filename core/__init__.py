@@ -6,14 +6,14 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-my_password = str(os.environ.get('PASSWORD'))
+my_password = str(os.environ.get('DB_PASSWORD'))
 
 app = Flask(__name__, template_folder="../templates") # Flask constructor 
 db_cred = { 
     'user': 'root',         # DATABASE USER 
     'pass': my_password,    # DATABASE PASSWORD 
     'host': '127.0.0.1:3306',    # DATABASE HOSTNAME 
-    'name': 'sakila'        # DATABASE NAME 
+    'name': 'fitnesstracker'        # DATABASE NAME 
 } 
 db_uri = f"mysql+pymysql://{db_cred['user']}:{db_cred['pass']}@{db_cred['host']}/{db_cred['name']}"
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
