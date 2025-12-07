@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 from core import db
-from users import User, add_user, delete_user
-from workouts import Workout, get_workouts_by_user, add_workout, delete_workout
-from metrics import BodyMetric, get_metrics_by_user, add_metric, delete_metric
-from nutrition import Nutrition, get_nutrition_by_user, add_nutrition, delete_nutrition
+from models.users import User, add_user, delete_user
+from models.workouts import Workout, get_workouts_by_user, add_workout, delete_workout
+from models.body_metrics import BodyMetric, get_metrics_by_user, add_metric, delete_metric
+from models.nutrition import Nutrition, get_nutrition_by_user, add_nutrition, delete_nutrition
 
 app = Flask(__name__, template_folder="templates")
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:YourPasswordHere@127.0.0.1:3306/sakila"
