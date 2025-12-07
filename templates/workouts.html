@@ -1,5 +1,4 @@
-{% extends "layout.html" %}
-{% block content %}
+
 <h2>Workouts for User #{{ user_id }}</h2>
 
 <a class="btn" href="{{ url_for('add_workout_form', user_id=user_id) }}">➕ Add Workout</a>
@@ -14,7 +13,6 @@
     <th>Delete</th>
 </tr>
 
-{% for w in workouts %}
 <tr>
     <td>{{ w.workout_id }}</td>
     <td>{{ w.workout_type }}</td>
@@ -23,8 +21,6 @@
     <td>{{ w.workout_date }}</td>
     <td><a style="color:red;" href="{{ url_for('delete_workout_route', id=w.workout_id) }}">❌ Delete</a></td>
 </tr>
-{% endfor %}
 </table>
 
 
-{% endblock %}
