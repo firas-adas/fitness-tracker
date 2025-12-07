@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>📏 Body Metrics</h2>
+
+<a href="{{ url_for('add_metric_form', user_id=user_id) }}" 
+   class="btn btn-primary">➕ Add Metric</a>
+
+<br><br>
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Weight (lbs)</th>
+        <th>Height (in)</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for m in metrics %}
+    <tr>
+        <td>{{ m.id }}</td>
+        <td>{{ m.measurement_date }}</td>
+        <td>{{ m.weight }}</td>
+        <td>{{ m.height }}</td>
+        <td>
+            <a href="/metrics/delete/{{ m.id }}" style="color: red;">🗑 Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

@@ -1,12 +1,25 @@
 from flask import Flask, render_template, request, redirect, url_for
 from core import db
+from dotenv import load_dotenv
+import os
+
+# --- Load .env variables ---
+load_dotenv()
+DB_USER = os.getenv("DB_USER")
+DB_PASS = os.getenv("DB_PASS")
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+
+# --- Models ---
 from models.users import User, add_user, delete_user
 from models.workouts import Workout, get_workouts_by_user, add_workout, delete_workout
 from models.body_metrics import BodyMetric, get_metrics_by_user, add_metric, delete_metric
 from models.nutrition import Nutrition, get_nutrition_by_user, add_nutrition, delete_nutrition
+from models.goals import Goal, get_goal_for_user, save_goal   # << NEW
 
 app = Flask(__name__, template_folder="templates")
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:YourPasswordHere@127.0.0.1:3306/sakila"
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -15,7 +28,6 @@ db.init_app(app)
 @app.route('/')
 def home():
     return render_template('index.html')
-
 
 # ---------- USERS ----------
 @app.route('/users')
@@ -30,8 +42,10 @@ def add_user_route():
             request.form['first_name'],
             request.form['last_name'],
             request.form['email'],
-            request.form.get('gender'),
             request.form.get('birthdate'),
+            request.form.get('gender'),
+            request.form.get('activity_level'),
+            request.form.get('experience')
         )
         return redirect(url_for('users_list'))
     return render_template('add_user.html')
@@ -48,20 +62,16 @@ def workouts_list(user_id):
     workouts = get_workouts_by_user(user_id)
     return render_template('workouts.html', workouts=workouts, user_id=user_id)
 
-
 @app.route('/workouts/add/<int:user_id>', methods=['GET', 'POST'])
 def add_workout_form(user_id):
     if request.method == 'POST':
         add_workout(
             user_id,
-            request.form['workout_type'],
-            request.form['duration'],
-            request.form['calories_burned'],
-            request.form['workout_date']
+            request.form['workout_name'],
+            request.form['scheduled_datetime']
         )
         return redirect(url_for('workouts_list', user_id=user_id))
     return render_template('add_workout.html', user_id=user_id)
-
 
 @app.route('/workouts/delete/<int:id>')
 def delete_workout_route(id):
@@ -125,6 +135,25 @@ def delete_nutrition_route(id):
     return redirect(url_for('nutrition_list', user_id=user_id))
 
 
+
+from models.goals import Goal, get_goal_for_user, save_goal
+
+@app.route('/goals/<int:user_id>', methods=['GET', 'POST'])
+def goals_page(user_id):
+    goal = get_goal_for_user(user_id)
+
+    if request.method == 'POST':
+        save_goal(
+            user_id,
+            request.form['weight_goal'],
+            request.form['calorie_goal']
+        )
+        return redirect(url_for('goals_page', user_id=user_id))
+
+    return render_template('goals.html', goal=goal, user_id=user_id)
+
+
+# ---------- RUN ----------
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()

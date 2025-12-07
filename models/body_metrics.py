@@ -10,10 +10,8 @@ class BodyMetric(db.Model):
     height = db.Column(db.Float)
     measurement_date = db.Column(db.Date)
 
-
 def get_metrics_by_user(user_id):
     return BodyMetric.query.filter_by(user_id=user_id).all()
-
 
 def add_metric(user_id, weight, height, measurement_date):
     md = datetime.strptime(measurement_date, "%Y-%m-%d").date() if measurement_date else None
@@ -21,9 +19,8 @@ def add_metric(user_id, weight, height, measurement_date):
     db.session.add(new_metric)
     db.session.commit()
 
-
 def delete_metric(metric_id):
-    m = BodyMetric.query.get(metric_id)
-    if m:
-        db.session.delete(m)
+    metric = BodyMetric.query.get(metric_id)
+    if metric:
+        db.session.delete(metric)
         db.session.commit()

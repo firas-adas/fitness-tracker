@@ -1,27 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Goals for User #{{ user_id }}</h2>
-<a class="btn" href="/add_goal/{{ user_id }}">Add Goal</a>
 
-<table>
-<tr>
-    <th>ID</th>
-    <th>Type</th>
-    <th>Target</th>
-    <th>Start</th>
-    <th>Deadline</th>
-    <th></th>
-</tr>
+<h2>🎯 User Goals</h2>
 
-{% for g in goals %}
-<tr>
-    <td>{{ g.goal_id }}</td>
-    <td>{{ g.goal_type }}</td>
-    <td>{{ g.target_value }}</td>
-    <td>{{ g.start_date }}</td>
-    <td>{{ g.target_date }}</td>
-    <td><a href="/delete_goal/{{ g.goal_id }}">Delete</a></td>
-</tr>
-{% endfor %}
-</table>
+<form method="POST">
+    <label>Weight Goal (lbs):</label><br>
+    <input type="number" step="0.1" name="weight_goal" 
+           value="{{ goal.weight_goal if goal else '' }}"><br><br>
+
+    <label>Daily Calorie Goal:</label><br>
+    <input type="number" name="calorie_goal" 
+           value="{{ goal.calorie_goal if goal else '' }}"><br><br>
+
+    <button type="submit">💾 Save Goal</button>
+</form>
+
+{% if goal %}
+<br>
+<hr>
+<h3>📌 Current Goals</h3>
+<ul>
+    <li>Weight Goal: <b>{{ goal.weight_goal }} lbs</b></li>
+    <li>Daily Calories Goal: <b>{{ goal.calorie_goal }} cal</b></li>
+</ul>
+{% endif %}
+
 {% endblock %}
