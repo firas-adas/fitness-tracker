@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% block content %}
+
 
 <h2>🎯 User Goals</h2>
 
@@ -15,7 +14,7 @@
     <button type="submit">💾 Save Goal</button>
 </form>
 
-{% if goal %}
+
 <br>
 <hr>
 <h3>📌 Current Goals</h3>
@@ -23,6 +22,4 @@
     <li>Weight Goal: <b>{{ goal.weight_goal }} lbs</b></li>
     <li>Daily Calories Goal: <b>{{ goal.calorie_goal }} cal</b></li>
 </ul>
-{% endif %}
 
-{% endblock %}
