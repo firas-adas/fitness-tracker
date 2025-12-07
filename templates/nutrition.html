@@ -1,27 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
+
 <h2>Nutrition Logs</h2>
 
-<a class="btn" href="/add_nutrition/{{ user_id }}">Add Entry</a>
+<a class="btn" href="{{ url_for('add_nutrition_form', user_id=user_id) }}">➕ Add Entry</a>
 
 <table>
 <tr>
-    <th>ID</th><th>Calories</th><th>Protein</th><th>Carbs</th>
-    <th>Fat</th><th>Water</th><th>Consistency</th><th>Date</th><th></th>
+    <th>ID</th>
+    <th>Calories</th>
+    <th>Protein</th>
+    <th>Carbs</th>
+    <th>Fat</th>
+    <th>Date</th>
+    <th>Delete</th>
 </tr>
 
-{% for n in nutrition %}
+{% for n in logs %}
 <tr>
     <td>{{ n.nutrition_id }}</td>
     <td>{{ n.calories }}</td>
     <td>{{ n.protein }}</td>
     <td>{{ n.carbs }}</td>
     <td>{{ n.fat }}</td>
-    <td>{{ n.water }}</td>
-    <td>{{ n.consistency }}</td>
     <td>{{ n.log_date }}</td>
-    <td><a href="/delete_nutrition/{{ n.nutrition_id }}">Delete</a></td>
+    <td>
+        <a style="color:red;" href="{{ url_for('delete_nutrition_route', id=n.nutrition_id) }}">❌ Delete</a>
+    </td>
 </tr>
 {% endfor %}
 </table>
+
 {% endblock %}

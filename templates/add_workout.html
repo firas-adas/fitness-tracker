@@ -1,22 +1,66 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>Add Workout</h2>
 
-<form action="{{ url_for('add_workout', user_id=user_id) }}" method="POST">
+<h2 style="text-align:center; margin-bottom:20px;">💪 Add Workout</h2>
+
+<div style="max-width:450px; margin:auto; padding:25px; background:white; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+
+<form action="{{ url_for('add_workout_form', user_id=user_id) }}" method="POST">
+
     <label>Workout Type:</label>
-    <input type="text" name="workout_type" required><br><br>
+    <input class="input" type="text" name="workout_type" placeholder="Running, Push Day, Chest workout..." required>
 
     <label>Duration (minutes):</label>
-    <input type="number" name="duration" required><br><br>
+    <input class="input" type="number" name="duration" placeholder="45" required>
 
     <label>Calories Burned:</label>
-    <input type="number" name="calories" required><br><br>
+    <input class="input" type="number" name="calories_burned" placeholder="350" required>
 
-    <label>Date:</label>
-    <input type="date" name="workout_date" required><br><br>
+    <label style="margin-top:10px;">Date:</label>
+    <input class="input" type="date" name="workout_date" required>
 
-    <button type="submit">💾 Save</button>
+    <button type="submit" class="btn" style="width:100%; margin-top:15px;">💾 Save Workout</button>
 </form>
 
-<a href="{{ url_for('workouts_list', user_id=user_id) }}">⬅ Back</a>
+<a href="{{ url_for('workouts_list', user_id=user_id) }}" class="back-link">⬅ Back</a>
+
+</div>
+
+<style>
+    .input {
+        width: 100%;
+        padding: 10px;
+        margin: 6px 0 14px 0;
+        border: 1px solid #d0cfd6;
+        border-radius: 6px;
+        font-size: 15px;
+    }
+    .btn {
+        display: inline-block;
+        background: #5b2fd6;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 6px;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 0.2s;
+    }
+    .btn:hover {
+        background: #4725a9;
+    }
+    .back-link {
+        display: block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #5b2fd6;
+        font-size: 16px;
+        text-align: center;
+    }
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
 {% endblock %}

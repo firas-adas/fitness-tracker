@@ -1,39 +1,75 @@
-<html>
-<head>
-    <title>Add Nutrition Entry</title>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block content %}
 
-<h2>Add Nutrition Entry for User {{ user_id }}</h2>
+<h2 style="text-align:center; margin-bottom:20px;">🥗 Add Nutrition Entry</h2>
 
-<form action="/add_nutrition/{{ user_id }}" method="POST">
+<div style="max-width:450px; margin:auto; padding:25px; background:white; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+
+<form action="{{ url_for('add_nutrition_form', user_id=user_id) }}" method="POST">
 
     <label>Calories:</label>
-    <input type="number" name="calories"><br><br>
+    <input class="input" type="number" name="calories" required>
 
-    <label>Protein:</label>
-    <input type="number" name="protein"><br><br>
+    <label>Protein (g):</label>
+    <input class="input" type="number" name="protein" required>
 
-    <label>Carbs:</label>
-    <input type="number" name="carbs"><br><br>
+    <label>Carbs (g):</label>
+    <input class="input" type="number" name="carbs" required>
 
-    <label>Fat:</label>
-    <input type="number" name="fat"><br><br>
+    <label>Fat (g):</label>
+    <input class="input" type="number" name="fat" required>
 
-    <label>Water:</label>
-    <input type="number" name="water"><br><br>
+    <label>Water (oz):</label>
+    <input class="input" type="number" name="water">
 
-    <label>Consistency:</label>
-    <input type="text" name="consistency"><br><br>
+    <label>Consistency (notes):</label>
+    <input class="input" type="text" name="consistency">
 
-    <label>Date:</label>
-    <input type="date" name="log_date"><br><br>
+    <label style="margin-top:10px;">Date:</label>
+    <input class="input" type="date" name="log_date" required>
 
-    <button type="submit">Add Entry</button>
+    <button type="submit" class="btn" style="width:100%; margin-top:15px;">💾 Save Entry</button>
 </form>
 
-<br>
-<a href="/nutrition/{{ user_id }}">Back</a>
+<a href="{{ url_for('nutrition_list', user_id=user_id) }}" class="back-link">⬅ Back</a>
 
-</body>
-</html>
+</div>
+
+<style>
+    .input {
+        width: 100%;
+        padding: 10px;
+        margin: 6px 0 14px 0;
+        border: 1px solid #d0cfd6;
+        border-radius: 6px;
+        font-size: 15px;
+    }
+    .btn {
+        display: inline-block;
+        background: #5b2fd6;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 6px;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 0.2s;
+    }
+    .btn:hover {
+        background: #4725a9;
+    }
+    .back-link {
+        display: block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #5b2fd6;
+        font-size: 16px;
+        text-align: center;
+    }
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+{% endblock %}

@@ -18,16 +18,19 @@
     </tr>
 
     {% for m in metrics %}
-    <tr>
-        <td>{{ m.id }}</td>
-        <td>{{ m.measurement_date }}</td>
-        <td>{{ m.weight }}</td>
-        <td>{{ m.height }}</td>
-        <td>
-            <a href="/metrics/delete/{{ m.id }}" style="color: red;">🗑 Delete</a>
-        </td>
-    </tr>
-    {% endfor %}
+<tr>
+    <td>{{ m.metric_id }}</td>
+    <td>{{ m.measurement_date }}</td>
+    <td>{{ m.weight }}</td>
+    <td>{{ m.height }}</td>
+    <td>
+        <a style="color:red;" href="{{ url_for('delete_metric_route', id=m.metric_id) }}">
+            🗑 Delete
+        </a>
+    </td>
+</tr>
+{% endfor %}
+
 </table>
 
 {% endblock %}

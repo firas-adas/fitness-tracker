@@ -67,11 +67,16 @@ def add_workout_form(user_id):
     if request.method == 'POST':
         add_workout(
             user_id,
-            request.form['workout_name'],
-            request.form['scheduled_datetime']
+            request.form['workout_type'],
+            request.form['duration'],
+            request.form['calories_burned'],
+            request.form['workout_date']
         )
         return redirect(url_for('workouts_list', user_id=user_id))
+    
     return render_template('add_workout.html', user_id=user_id)
+
+
 
 @app.route('/workouts/delete/<int:id>')
 def delete_workout_route(id):

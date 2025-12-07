@@ -7,19 +7,24 @@
 <table>
 <tr>
     <th>ID</th>
-    <th>Name</th>
-    <th>Scheduled</th>
+    <th>Workout Type</th>
+    <th>Duration (min)</th>
+    <th>Calories Burned</th>
+    <th>Date</th>
     <th>Delete</th>
 </tr>
 
 {% for w in workouts %}
 <tr>
     <td>{{ w.workout_id }}</td>
-    <td>{{ w.workout_name }}</td>
-    <td>{{ w.scheduled_datetime }}</td>
-    <td><a style="color:red;" href="{{ url_for('delete_workout', id=w.workout_id) }}">❌ Delete</a></td>
+    <td>{{ w.workout_type }}</td>
+    <td>{{ w.duration }} min</td>
+    <td>{{ w.calories_burned }} kcal</td>
+    <td>{{ w.workout_date }}</td>
+    <td><a style="color:red;" href="{{ url_for('delete_workout_route', id=w.workout_id) }}">❌ Delete</a></td>
 </tr>
 {% endfor %}
 </table>
+
 
 {% endblock %}
