@@ -1,15 +1,11 @@
-<html>
-<head>
-    <title>Workouts</title>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block content %}
 
 <h2>Workouts for User {{ user_id }}</h2>
 
-<a href="/add_workout/{{ user_id }}">Add Workout</a>
-<br><br>
+<a href="/add_workout/{{ user_id }}" class="btn">➕ Add Workout</a>
 
-<table border="1" cellpadding="8">
+<table>
     <tr>
         <th>Workout ID</th>
         <th>Type</th>
@@ -26,13 +22,11 @@
         <td>{{ w.duration }}</td>
         <td>{{ w.calories_burned }}</td>
         <td>{{ w.workout_date }}</td>
-        <td><a href="/delete_workout/{{ w.workout_id }}">Delete</a></td>
+        <td>
+            <a href="/delete_workout/{{ w.workout_id }}" style="color:red;">❌ Delete</a>
+        </td>
     </tr>
     {% endfor %}
 </table>
 
-<br>
-<a href="/users">Back to Users</a>
-
-</body>
-</html>
+{% endblock %}

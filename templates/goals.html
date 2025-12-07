@@ -1,38 +1,36 @@
 <html>
-<head>
-    <title>User Goals</title>
-</head>
+<head><title>User Goals</title></head>
 <body>
 
-<h2>Goals for User {{ user_id }}</h2>
+<h2>🎯 Goals for User {{ user_id }}</h2>
 
-<a href="/add_goal/{{ user_id }}">Add New Goal</a>
+<a href="/add_goal/{{ user_id }}">➕ Add Goal</a>
 <br><br>
 
-<table border="1" cellpadding="8">
-    <tr>
-        <th>Goal ID</th>
-        <th>Goal Type</th>
-        <th>Target Value</th>
-        <th>Start Date</th>
-        <th>Target Date</th>
-        <th>Delete</th>
-    </tr>
+<table border="1" cellpadding="10">
+<tr>
+    <th>ID</th>
+    <th>Type</th>
+    <th>Target</th>
+    <th>Start</th>
+    <th>Target Date</th>
+    <th>Delete</th>
+</tr>
 
-    {% for g in goals %}
-    <tr>
-        <td>{{ g.goal_id }}</td>
-        <td>{{ g.goal_type }}</td>
-        <td>{{ g.target_value }}</td>
-        <td>{{ g.start_date }}</td>
-        <td>{{ g.target_date }}</td>
-        <td><a href="/delete_goal/{{ g.goal_id }}">Delete</a></td>
-    </tr>
-    {% endfor %}
+{% for g in goals %}
+<tr>
+    <td>{{ g.goal_id }}</td>
+    <td>{{ g.goal_type }}</td>
+    <td>{{ g.target_value }}</td>
+    <td>{{ g.start_date }}</td>
+    <td>{{ g.target_date }}</td>
+    <td><a href="/delete_goal/{{ g.goal_id }}">❌</a></td>
+</tr>
+{% endfor %}
 </table>
 
-<br>
-<a href="/users">Back to Users</a>
+<br><hr>
+<a href="/users">⬅ Back to Users</a>
 
 </body>
 </html>

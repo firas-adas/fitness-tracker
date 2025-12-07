@@ -1,44 +1,42 @@
 <html>
-<head>
-    <title>Nutrition Logs</title>
-</head>
+<head><title>Nutrition Logs</title></head>
 <body>
 
-<h2>Nutrition Logs for User {{ user_id }}</h2>
+<h2>🥗 Nutrition Log for User {{ user_id }}</h2>
 
-<a href="/add_nutrition/{{ user_id }}">Add Nutrition Entry</a>
+<a href="/add_nutrition/{{ user_id }}">➕ Add Entry</a>
 <br><br>
 
-<table border="1" cellpadding="8">
-    <tr>
-        <th>ID</th>
-        <th>Calories</th>
-        <th>Protein</th>
-        <th>Carbs</th>
-        <th>Fat</th>
-        <th>Water</th>
-        <th>Consistency</th>
-        <th>Date</th>
-        <th>Delete</th>
-    </tr>
+<table border="1" cellpadding="10">
+<tr>
+    <th>ID</th>
+    <th>Calories</th>
+    <th>Protein</th>
+    <th>Carbs</th>
+    <th>Fat</th>
+    <th>Water</th>
+    <th>Notes</th>
+    <th>Date</th>
+    <th>Delete</th>
+</tr>
 
-    {% for n in nutrition %}
-    <tr>
-        <td>{{ n.nutrition_id }}</td>
-        <td>{{ n.calories }}</td>
-        <td>{{ n.protein }}</td>
-        <td>{{ n.carbs }}</td>
-        <td>{{ n.fat }}</td>
-        <td>{{ n.water }}</td>
-        <td>{{ n.consistency }}</td>
-        <td>{{ n.log_date }}</td>
-        <td><a href="/delete_nutrition/{{ n.nutrition_id }}">Delete</a></td>
-    </tr>
-    {% endfor %}
+{% for n in nutrition %}
+<tr>
+    <td>{{ n.nutrition_id }}</td>
+    <td>{{ n.calories }}</td>
+    <td>{{ n.protein }}</td>
+    <td>{{ n.carbs }}</td>
+    <td>{{ n.fat }}</td>
+    <td>{{ n.water }}</td>
+    <td>{{ n.consistency }}</td>
+    <td>{{ n.log_date }}</td>
+    <td><a href="/delete_nutrition/{{ n.nutrition_id }}">❌</a></td>
+</tr>
+{% endfor %}
 </table>
 
-<br>
-<a href="/users">Back to Users</a>
+<br><hr>
+<a href="/users">⬅ Back</a>
 
 </body>
 </html>

@@ -1,38 +1,36 @@
 <html>
-<head>
-    <title>Body Metrics</title>
-</head>
+<head><title>Body Metrics</title></head>
 <body>
 
-<h2>Body Metrics for User {{ user_id }}</h2>
+<h2>📏 Body Metrics for User {{ user_id }}</h2>
 
-<a href="/add_metric/{{ user_id }}">Add Metric</a>
+<a href="/add_metric/{{ user_id }}">➕ Add Metric</a>
 <br><br>
 
-<table border="1" cellpadding="8">
-    <tr>
-        <th>ID</th>
-        <th>Weight</th>
-        <th>Height</th>
-        <th>BMI</th>
-        <th>Date</th>
-        <th>Delete</th>
-    </tr>
+<table border="1" cellpadding="10">
+<tr>
+    <th>ID</th>
+    <th>Weight</th>
+    <th>Height</th>
+    <th>BMI</th>
+    <th>Date</th>
+    <th>Delete</th>
+</tr>
 
-    {% for m in metrics %}
-    <tr>
-        <td>{{ m.body_metric_id }}</td>
-        <td>{{ m.weight }}</td>
-        <td>{{ m.height }}</td>
-        <td>{{ m.bmi }}</td>
-        <td>{{ m.recorded_date }}</td>
-        <td><a href="/delete_metric/{{ m.body_metric_id }}">Delete</a></td>
-    </tr>
-    {% endfor %}
+{% for m in metrics %}
+<tr>
+    <td>{{ m.body_metric_id }}</td>
+    <td>{{ m.weight }}</td>
+    <td>{{ m.height }}</td>
+    <td>{{ m.bmi }}</td>
+    <td>{{ m.recorded_date }}</td>
+    <td><a href="/delete_metric/{{ m.body_metric_id }}">❌</a></td>
+</tr>
+{% endfor %}
 </table>
 
-<br>
-<a href="/users">Back to Users</a>
+<br><hr>
+<a href="/users">⬅ Back</a>
 
 </body>
 </html>

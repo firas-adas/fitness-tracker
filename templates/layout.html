@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title or "Fitness Tracker" }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        header, footer { margin-bottom: 20px; }
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        .btn {
+            padding: 6px 10px;
+            background-color: lightblue;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Fitness Tracker</h1>
+    <nav>
+        <a href="/">🏠 Home</a>
+        <a href="/users">👤 Users</a>
+    </nav>
+    <hr>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<hr>
+<footer>
+    <p style="font-size:12px; color:gray;">© Fitness Tracker Project</p>
+</footer>
+
+</body>
+</html>

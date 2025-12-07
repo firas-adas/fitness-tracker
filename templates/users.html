@@ -1,41 +1,42 @@
 <html>
-<head>
-    <title>Users</title>
-</head>
+<head><title>Users</title></head>
 <body>
-    <h2>All Users</h2>
 
-    <a href="/add_user">Add New User</a>
-    <br><br>
+<h2>👤 Users</h2>
 
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>User ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>DOB</th>
-            <th>Gender</th>
-            <th>Activity Level</th>
-            <th>Experience</th>
-            <th>Delete</th>
-        </tr>
+<a href="/add_user">➕ Add User</a>
+<br><br>
 
-        {% for u in users %}
-        <tr>
-            <td>{{ u.user_id }}</td>
-            <td>{{ u.first_name }} {{ u.last_name }}</td>
-            <td>{{ u.email }}</td>
-            <td>{{ u.date_of_birth }}</td>
-            <td>{{ u.gender }}</td>
-            <td>{{ u.activity_level }}</td>
-            <td>{{ u.experience }}</td>
-            <td><a href="/delete_user/{{ u.user_id }}">Delete</a></td>
-        </tr>
-        {% endfor %}
-    </table>
+<table border="1" cellpadding="10">
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Actions</th>
+</tr>
+</thead>
 
-    <br><br>
-    <a href="/">Back to Home</a>
+<tbody>
+{% for user in users %}
+<tr>
+    <td>{{ user.id }}</td>
+    <td>{{ user.first_name }} {{ user.last_name }}</td>
+    <td>{{ user.email }}</td>
+    <td>
+        <a href="/goals/{{ user.id }}">🎯 Goals</a> |
+        <a href="/workouts/{{ user.id }}">🏋️ Workouts</a> |
+        <a href="/metrics/{{ user.id }}">📏 Body Metrics</a> |
+        <a href="/nutrition/{{ user.id }}">🥗 Nutrition</a> |
+        <a href="/delete_user/{{ user.id }}">❌ Delete</a>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<br><hr>
+<a href="/">🏠 Home</a>
 
 </body>
 </html>
