@@ -4,14 +4,23 @@ class WorkoutSet(db.Model):
     __tablename__ = 'WorkoutSet'
 
     set_id = db.Column(db.Integer, primary_key=True)
-    workout_id = db.Column(db.Integer, db.ForeignKey('Workout.workout_id'), nullable=False)
-    exercise_id = db.Column(db.Integer, db.ForeignKey('Exercise.exercise_id'), nullable=False)
+    workout_id = db.Column(
+        db.Integer,
+        db.ForeignKey('Workout.workout_id'),
+        nullable=False
+    )
+    exercise_id = db.Column(
+        db.Integer,
+        db.ForeignKey('Exercise.exercise_id'),
+        nullable=False
+    )
     set_number = db.Column(db.Integer)
     weight = db.Column(db.Numeric(6, 2))
     reps = db.Column(db.Integer)
     rpe = db.Column(db.Numeric(3, 1))
     note = db.Column(db.String(255))
 
+    # FK relationships
     workout = db.relationship('Workout', backref='sets')
     exercise = db.relationship('Exercise', backref='sets')
 

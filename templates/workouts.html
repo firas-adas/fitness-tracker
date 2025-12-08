@@ -16,6 +16,7 @@
     </tr>
 
     {% for w in workouts %}
+    <!-- Workout row -->
     <tr>
         <td>{{ w.workout_id }}</td>
         <td>{{ w.workout_type }}</td>
@@ -28,6 +29,34 @@
             </a>
         </td>
     </tr>
+
+    <!-- Nested sets table (only if workout has sets) -->
+    {% if w.sets %}
+    <tr>
+        <td colspan="6">
+            <table style="width:100%; margin-top:8px; border-collapse: collapse;">
+                <tr>
+                    <th>Set #</th>
+                    <th>Exercise</th>
+                    <th>Weight</th>
+                    <th>Reps</th>
+                    <th>RPE</th>
+                    <th>Note</th>
+                </tr>
+                {% for s in w.sets %}
+                <tr>
+                    <td>{{ s.set_number }}</td>
+                    <td>{{ s.exercise.exercise_name if s.exercise else 'N/A' }}</td>
+                    <td>{{ s.weight }}</td>
+                    <td>{{ s.reps }}</td>
+                    <td>{{ s.rpe }}</td>
+                    <td>{{ s.note or '' }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+    {% endif %}
     {% endfor %}
 </table>
 
