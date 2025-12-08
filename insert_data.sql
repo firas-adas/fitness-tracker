@@ -49,6 +49,7 @@ VALUES
 ('Dumbbell Lateral Raise', 5, 4, NULL),
 ('Bicep Curl', 6, 4, NULL);
 
+
 -- Workouts
 INSERT INTO Workout (user_id, workout_name, scheduled_datetime)
 VALUES
@@ -72,6 +73,7 @@ VALUES
 (1, 150.5, 65.0, '2025-10-01'),
 (2, 180.0, 70.0, '2025-10-02'),
 (3, 140.0, 62.0, '2025-10-03');
+
 
 -- Nutrition Logs
 INSERT INTO Nutrition (user_id, calories, protein, carbs, fat, log_datetime)
