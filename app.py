@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
-from core import db
 from dotenv import load_dotenv
 import os
+
+from core import db
 
 # --- Load .env variables ---
 load_dotenv()
@@ -11,17 +12,18 @@ DB_HOST = os.getenv("DB_HOST")
 DB_NAME = os.getenv("DB_NAME")
 
 # --- Models ---
-from models.users import User, add_user, delete_user
+from models.users import User, add_user, delete_user, get_users
 from models.workouts import Workout, get_workouts_by_user, add_workout, delete_workout
 from models.body_metrics import BodyMetric, get_metrics_by_user, add_metric, delete_metric
 from models.nutrition import Nutrition, get_nutrition_by_user, add_nutrition, delete_nutrition
-from models.goals import Goal, get_goal_for_user, save_goal   # << NEW
+from models.goals import Goal, get_goal_for_user, save_goal
 
 app = Flask(__name__, template_folder="templates")
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Bind SQLAlchemy to this Flask app
 db.init_app(app)
 
 # ---------- HOME ----------
@@ -32,7 +34,7 @@ def home():
 # ---------- USERS ----------
 @app.route('/users')
 def users_list():
-    users = User.query.all()
+    users = get_users()
     return render_template('users.html', users=users)
 
 @app.route('/add_user', methods=['GET', 'POST'])
@@ -75,8 +77,6 @@ def add_workout_form(user_id):
         return redirect(url_for('workouts_list', user_id=user_id))
     
     return render_template('add_workout.html', user_id=user_id)
-
-
 
 @app.route('/workouts/delete/<int:id>')
 def delete_workout_route(id):
@@ -140,9 +140,7 @@ def delete_nutrition_route(id):
     return redirect(url_for('nutrition_list', user_id=user_id))
 
 
-
-from models.goals import Goal, get_goal_for_user, save_goal
-
+# ---------- GOALS ----------
 @app.route('/goals/<int:user_id>', methods=['GET', 'POST'])
 def goals_page(user_id):
     goal = get_goal_for_user(user_id)

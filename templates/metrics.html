@@ -1,9 +1,11 @@
-
+{% extends "layout.html" %}
+{% block content %}
 
 <h2>📏 Body Metrics</h2>
 
-<a href="{{ url_for('add_metric_form', user_id=user_id) }}" 
-   class="btn btn-primary">➕ Add Metric</a>
+<a href="{{ url_for('add_metric_form', user_id=user_id) }}" class="btn">
+    ➕ Add Metric
+</a>
 
 <br><br>
 
@@ -17,18 +19,18 @@
     </tr>
 
     {% for m in metrics %}
-<tr>
-    <td>{{ m.metric_id }}</td>
-    <td>{{ m.measurement_date }}</td>
-    <td>{{ m.weight }}</td>
-    <td>{{ m.height }}</td>
-    <td>
-        <a style="color:red;" href="{{ url_for('delete_metric_route', id=m.metric_id) }}">
-            🗑 Delete
-        </a>
-    </td>
-</tr>
-
-
+    <tr>
+        <td>{{ m.metric_id }}</td>
+        <td>{{ m.measurement_date }}</td>
+        <td>{{ m.weight }}</td>
+        <td>{{ m.height }}</td>
+        <td>
+            <a style="color:red;" href="{{ url_for('delete_metric_route', id=m.metric_id) }}">
+                🗑 Delete
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
 </table>
 
+{% endblock %}

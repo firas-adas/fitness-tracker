@@ -1,20 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
 
 <h2>Body Metrics</h2>
+
 <a class="btn" href="/add_metric/{{ user_id }}">Add Entry</a>
 
 <table>
-<tr>
-    <th>ID</th><th>Weight</th><th>Height</th><th>BMI</th><th>Date</th><th></th>
-</tr>
+    <tr>
+        <th>ID</th>
+        <th>Weight</th>
+        <th>Height</th>
+        <th>BMI</th>
+        <th>Date</th>
+        <th></th>
+    </tr>
 
-<tr>
-    <td>{{ m.body_metric_id }}</td>
-    <td>{{ m.weight }}</td>
-    <td>{{ m.height }}</td>
-    <td>{{ m.bmi }}</td>
-    <td>{{ m.recorded_date }}</td>
-    <td><a href="/delete_metric/{{ m.body_metric_id }}">Delete</a></td>
-</tr>
-
+    {% for m in metrics %}
+    <tr>
+        <td>{{ m.body_metric_id }}</td>
+        <td>{{ m.weight }}</td>
+        <td>{{ m.height }}</td>
+        <td>{{ m.bmi }}</td>
+        <td>{{ m.recorded_date }}</td>
+        <td><a href="/delete_metric/{{ m.body_metric_id }}">Delete</a></td>
+    </tr>
+    {% endfor %}
 </table>
 
+{% endblock %}

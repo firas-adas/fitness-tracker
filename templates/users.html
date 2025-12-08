@@ -1,29 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
 
 <h2>Users</h2>
 
 <a class="btn" href="{{ url_for('add_user_route') }}">➕ Add User</a>
 
 <table>
-<tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Actions</th>
-</tr>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
 
-<tr>
-    <td>{{ user.user_id }}</td>
-    <td>{{ user.first_name }} {{ user.last_name }}</td>
-    <td>{{ user.email }}</td>
-
-    <td>
-        <a href="{{ url_for('workouts_list', user_id=user.user_id) }}">💪 Workouts</a> |
-        <a href="{{ url_for('metrics_list', user_id=user.user_id) }}">📏 Metrics</a> |
-        <a href="{{ url_for('nutrition_list', user_id=user.user_id) }}">🥗 Nutrition</a> |
-        <a href="{{ url_for('goals_page', user_id=user.user_id) }}">🎯 Goals</a> |
-        <a style="color:red;" href="{{ url_for('delete_user_route', id=user.user_id) }}">❌ Delete</a>
-    </td>
-</tr>
-    
+    {% for user in users %}
+    <tr>
+        <td>{{ user.user_id }}</td>
+        <td>{{ user.first_name }} {{ user.last_name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+            <a href="{{ url_for('workouts_list', user_id=user.user_id) }}">💪 Workouts</a> |
+            <a href="{{ url_for('metrics_list', user_id=user.user_id) }}">📏 Metrics</a> |
+            <a href="{{ url_for('nutrition_list', user_id=user.user_id) }}">🥗 Nutrition</a> |
+            <a href="{{ url_for('goals_page', user_id=user.user_id) }}">🎯 Goals</a> |
+            <a style="color:red;" href="{{ url_for('delete_user_route', id=user.user_id) }}">❌ Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
 </table>
 
+{% endblock %}
