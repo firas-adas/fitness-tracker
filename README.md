@@ -1,21 +1,44 @@
-# Fitness Tracker
+# 🏋️ Fitness Tracker Web App
 
-Full-stack fitness tracking web application built with Flask and SQL for logging workouts, nutrition, and body metrics.
+A full-stack **Flask + MySQL** fitness tracking application that allows users to manage workouts, body metrics, nutrition logs, and fitness goals through a clean web interface.
 
-> Originally developed as part of a course project. I was responsible for the backend architecture, database schema, and core application logic.
+Built as a portfolio project to demonstrate backend development, database design, and full CRUD functionality.
 
-## Tech Stack
-- Python
-- Flask
-- SQL (relational database design)
-- HTML/CSS
+---
 
-## Features
-- User authentication
-- Workout logging
-- Nutrition tracking
-- Body metrics tracking
-- REST-style backend routes
+## 🚀 Features
 
-## Purpose
-This project focuses on backend fundamentals including database design, CRUD operations, and Flask MVC architecture.
+- 👤 **User Management**
+  - Create and delete users
+  - View all users in a dashboard
+
+- 💪 **Workouts**
+  - Log workouts by type, duration, calories burned, and date
+  - View and delete workouts per user
+
+- 📏 **Body Metrics**
+  - Track weight, height, and measurement dates
+  - View historical body metrics
+
+- 🥗 **Nutrition Tracking**
+  - Log calories, protein, carbs, fat, and water intake
+  - Daily nutrition entries per user
+
+- 🎯 **Fitness Goals**
+  - Set weight goals and daily calorie goals
+  - View current goals per user
+
+---
+
+## 🧱 Tech Stack
+
+- **Backend:** Python, Flask
+- **Database:** MySQL
+- **ORM:** SQLAlchemy
+- **Frontend:** HTML, CSS (Jinja templates)
+- **Environment Management:** python-dotenv
+
+---
+
+## 📁 Project Structure
+
