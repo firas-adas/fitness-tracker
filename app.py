@@ -4,27 +4,34 @@ import os
 
 from core import db
 
-# --- Load .env variables ---
-load_dotenv()
-DB_USER = os.getenv("DB_USER")
-DB_PASS = os.getenv("DB_PASS")
-DB_HOST = os.getenv("DB_HOST")
-DB_NAME = os.getenv("DB_NAME")
-
 # --- Models ---
-from models.users import User, add_user, delete_user, get_users
+from models.users import User, get_users, add_user, delete_user
 from models.workouts import Workout, get_workouts_by_user, add_workout, delete_workout
 from models.body_metrics import BodyMetric, get_metrics_by_user, add_metric, delete_metric
 from models.nutrition import Nutrition, get_nutrition_by_user, add_nutrition, delete_nutrition
 from models.goals import Goal, get_goal_for_user, save_goal
 
+
+# --- Create Flask app FIRST ---
 app = Flask(__name__, template_folder="templates")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
+# --- Load .env variables ---
+load_dotenv()
+
+DB_USER = os.getenv("DB_USER")
+DB_PASS = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+
+# --- Database config ---
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Bind SQLAlchemy to this Flask app
+# --- Bind SQLAlchemy ---
 db.init_app(app)
+
 
 # ---------- HOME ----------
 @app.route('/')
