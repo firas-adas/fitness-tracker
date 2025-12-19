@@ -1,44 +1,23 @@
-# 🏋️ Fitness Tracker Web App
+# Fitness Tracker Web App
 
-A full-stack **Flask + MySQL** fitness tracking application that allows users to manage workouts, body metrics, nutrition logs, and fitness goals through a clean web interface.
+A full-stack fitness tracking web application built with Flask and MySQL.  
+The app allows users to manage workouts, body metrics, nutrition logs, and fitness goals through a clean CRUD-based interface.
 
-Built as a portfolio project to demonstrate backend development, database design, and full CRUD functionality.
+## Features
+- User management (create, view, delete users)
+- Workout tracking (type, duration, calories, date)
+- Body metrics logging (weight, height)
+- Nutrition tracking (calories, macros, hydration)
+- Fitness goal setting (weight & calorie goals)
+- Relational MySQL database with SQLAlchemy ORM
 
----
-
-## 🚀 Features
-
-- 👤 **User Management**
-  - Create and delete users
-  - View all users in a dashboard
-
-- 💪 **Workouts**
-  - Log workouts by type, duration, calories burned, and date
-  - View and delete workouts per user
-
-- 📏 **Body Metrics**
-  - Track weight, height, and measurement dates
-  - View historical body metrics
-
-- 🥗 **Nutrition Tracking**
-  - Log calories, protein, carbs, fat, and water intake
-  - Daily nutrition entries per user
-
-- 🎯 **Fitness Goals**
-  - Set weight goals and daily calorie goals
-  - View current goals per user
-
----
-
-## 🧱 Tech Stack
-
-- **Backend:** Python, Flask
+## Tech Stack
+- **Backend:** Flask, SQLAlchemy
 - **Database:** MySQL
-- **ORM:** SQLAlchemy
-- **Frontend:** HTML, CSS (Jinja templates)
-- **Environment Management:** python-dotenv
+- **Frontend:** Jinja2, HTML, CSS
+- **Other:** Python, dotenv
 
----
-
-## 📁 Project Structure
-
+## Setup Instructions
+1. Clone the repository
+   ```bash
+   git clone https://github.com/firas-adas/fitness-tracker.git
